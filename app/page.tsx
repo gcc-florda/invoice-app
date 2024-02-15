@@ -24,12 +24,21 @@ export default function Page() {
             </a>
             , brought to you by Vercel.
           </p>
-          <Link
-            href="/login"
-            className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-          >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
-          </Link>
+          <div className='flex flex-row'>
+            <Link
+              href="/signup"
+              className="mr-4 flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
+            >
+              <span>Sign Up</span> <ArrowRightIcon className="w-5 md:w-6" />
+            </Link>
+            
+            <Link
+              href="/login"
+              className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
+            >
+              <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
+            </Link>
+          </div>
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
           <Image src='/hero-desktop.png' width={1000} height={760} className="hidden md:block" alt="Screenshots of the dashboard project showing desktop version"/>
