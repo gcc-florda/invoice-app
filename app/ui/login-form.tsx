@@ -66,7 +66,7 @@ export default function LoginForm() {
             <span
                   className="mb-3 mt-5 block text-xs font-medium text-gray-900"
             >
-              Don't have an account yet? &nbsp;
+              Do not have an account yet? &nbsp;
             </span>
           <Link href="/signup">
             <span
