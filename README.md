@@ -1,1 +1,1 @@
-## Next.js App Invoice App
+## Next.js Invoice App
