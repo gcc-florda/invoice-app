@@ -6,6 +6,10 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import {getUser, getUsersEmails} from '@/app/lib/data';
+import { v4 as uuidv4 } from 'uuid';
+const { db } = require('@vercel/postgres');
+const bcrypt = require('bcrypt');
 
 const FormSchema = z.object({
     id: z.string(),
@@ -128,4 +132,51 @@ export async function updateInvoice(id: string, prevState: State, formData: Form
         }
       throw error;
     }
+  }
+
+  export async function registerUser(
+    prevState: string | undefined,
+    formData: FormData) {
+        try {
+            const newUserName = formData.get('user')?.toString();
+            const newUserEmail = formData.get('email')?.toString();
+            const newUserPassword = formData.get('password')?.toString();
+            
+            const data = await getUsersEmails();
+
+            var userFound = false;
+
+            data.map((user) => { 
+                if (user.email === newUserEmail) {
+                userFound = true;
+                return;
+                } 
+            });
+
+            if (userFound) return undefined;
+
+            // Register User
+
+            const userId: string = uuidv4();
+            const hashedPassword = await bcrypt.hash(newUserPassword, 10);
+
+            const client = await db.connect();
+
+            console.log(userId, newUserName, newUserEmail, hashedPassword);
+
+            await client.sql`
+                INSERT INTO users (id, name, email, password)
+                VALUES (${userId}, ${newUserName}, ${newUserEmail}, ${hashedPassword})
+                ON CONFLICT (id) DO NOTHING;
+            `;
+
+            await client.end();
+
+            await signIn('credentials', formData);
+
+        }
+        catch (e) {
+            // throw new Error('Failed to register user.');
+            throw e;
+        }
   }

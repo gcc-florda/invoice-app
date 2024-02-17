@@ -10,11 +10,11 @@ import {
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { useFormState, useFormStatus } from 'react-dom';
-import { authenticate } from '@/app/lib/actions';
+import { registerUser } from '@/app/lib/actions';
 import Link from 'next/link';
 
 export default function SignUpForm() {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const [errorMessage, dispatch] = useFormState(registerUser, undefined);
 
   return (
     <form action={dispatch} className="space-y-3">
@@ -26,16 +26,16 @@ export default function SignUpForm() {
         <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="email"
+              htmlFor="user"
             >
               Username
             </label>
             <div className="relative">
               <input
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="email"
-                type="email"
-                name="email"
+                id="user"
+                type="text"
+                name="user"
                 placeholder="Enter your username"
                 required
               />
@@ -97,14 +97,14 @@ export default function SignUpForm() {
           </Link>
         </div>
         <SignUpButton />
-        <div className="flex h-8 items-end space-x-1">
+        {/* <div className="flex h-8 items-end space-x-1">
           {errorMessage && (
               <>
                 <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
                 <p className="text-sm text-red-500">{errorMessage}</p>
               </>
           )}
-        </div>
+        </div> */}
       </div>
     </form>
   );
